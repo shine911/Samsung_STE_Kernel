@@ -10,14 +10,14 @@
 ##############################################################################
 # set toolchain
 ##############################################################################
-#export ARCH=arm
+export ARCH=arm
 #export CROSS_COMPILE=$PWD/../prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi-
 
 ##############################################################################
 # make zImage
 ##############################################################################
 mkdir -p ./obj/KERNEL_OBJ/
-make O=./obj/KERNEL_OBJ/ msm8960_ef51l_tp20_perf_defconfig
+make O=./obj/KERNEL_OBJ/  	cyanogenmod_i8160_defconfig
 make -j4 O=./obj/KERNEL_OBJ/
 
 ##############################################################################
