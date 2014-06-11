@@ -1490,12 +1490,9 @@ static int arm_set_rate(unsigned long rate)
 		if (frequency == freq_table[i].frequency) {
 			if (db8500_prcmu_get_arm_opp() == ARM_MAX_OPP) {
 				db8500_prcmu_writel(PRCMU_PLLARM_REG, PLLARM_MAXOPP);
-			}
-			#ifdef CONFIG_MACH_CODINA
-			if (db8500_prcmu_get_arm_opp() == ARM_100_OPP) {
+			} else if (db8500_prcmu_get_arm_opp() == ARM_100_OPP) {
 				db8500_prcmu_writel(PRCMU_PLLARM_REG, PLLARM_FREQ100OPP);
 			}
-			#endif
 			db8500_prcmu_set_arm_lopp(liveopp_arm[i].arm_opp, i);
 			last_arm_idx = i;
 
@@ -2518,6 +2515,8 @@ static unsigned long db8500_prcmu_clock_rate(u8 clock)
 		return armss_rate();
 	else if (clock == PRCMU_ARMCLK)
 		return arm_get_rate();
+	else if (clock == PRCMU_PLLARM)
+		return pll_rate(PRCM_PLLARM_FREQ, ROOT_CLOCK_RATE, PLL_RAW);
 	else if (clock == PRCMU_PLLDDR)
 		return pll_rate(PRCM_PLLDDR_FREQ, ROOT_CLOCK_RATE, PLL_RAW);
 	else if (clock == PRCMU_PLLDSI)
